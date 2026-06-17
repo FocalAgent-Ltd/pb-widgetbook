@@ -147,6 +147,46 @@ const PbText(
 )
 ```
 
+## Web Preview (HTML/CSS/JS)
+
+```html
+<section class="pb-text-demo" id="pbTextDemo">
+  <h2 class="pb-text pb-h3">Property Details</h2>
+  <p class="pb-text pb-body">A bright and spacious apartment close to transport links.</p>
+  <label class="pb-text pb-label">Email Address</label>
+  <p class="pb-text pb-custom">Featured listing</p>
+  <button id="toggleCompactText">Toggle Compact</button>
+</section>
+```
+
+```css
+.pb-text-demo {
+  display: grid;
+  gap: 8px;
+  max-width: 460px;
+  font-family: Poppins, sans-serif;
+  color: #0a101d;
+}
+
+.pb-text { margin: 0; }
+.pb-h3 { font-size: 20px; font-weight: 700; }
+.pb-body { font-size: 16px; font-weight: 400; color: #334155; }
+.pb-label { font-size: 12px; font-weight: 500; }
+.pb-custom { font-size: 13px; font-weight: 600; letter-spacing: 0.2px; }
+
+.pb-text-demo.is-compact .pb-h3 { font-size: 16px; }
+.pb-text-demo.is-compact .pb-body { font-size: 14px; }
+```
+
+```javascript
+const pbTextDemo = document.getElementById('pbTextDemo');
+const toggleCompactText = document.getElementById('toggleCompactText');
+
+toggleCompactText.addEventListener('click', () => {
+  pbTextDemo.classList.toggle('is-compact');
+});
+```
+
 ## Refactor Notes
 
 Current implementation is production-ready and should remain stable for now.

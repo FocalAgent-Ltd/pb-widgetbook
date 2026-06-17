@@ -171,6 +171,93 @@ PbButton(
 )
 ```
 
+## Web Preview (HTML/CSS/JS)
+
+```html
+<div class="pb-button-demo">
+  <button class="pb-btn pb-btn-primary" id="primaryBtn">Arrange Viewing</button>
+  <button class="pb-btn pb-btn-secondary-teal">Save</button>
+  <button class="pb-btn pb-btn-secondary-white">Share</button>
+  <button class="pb-btn pb-btn-compact">Featured</button>
+</div>
+```
+
+```css
+.pb-button-demo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  font-family: Poppins, sans-serif;
+}
+
+.pb-btn {
+  border-radius: 999px;
+  border: 0;
+  cursor: pointer;
+  font-weight: 500;
+  transition: transform 0.12s ease, opacity 0.12s ease;
+}
+
+.pb-btn:active { transform: scale(0.98); }
+
+.pb-btn-primary {
+  min-width: 220px;
+  height: 40px;
+  padding: 0 24px;
+  font-size: 15px;
+  color: #fff;
+  background: #635cf5;
+}
+
+.pb-btn-secondary-teal,
+.pb-btn-secondary-white {
+  height: 30px;
+  padding: 0 20px;
+  font-size: 11px;
+}
+
+.pb-btn-secondary-teal {
+  color: #fff;
+  background: #0ad0ab;
+}
+
+.pb-btn-secondary-white {
+  color: #0a101d;
+  background: #fff;
+  border: 1px solid #0a101d;
+}
+
+.pb-btn-compact {
+  height: 28px;
+  padding: 0 16px;
+  font-size: 12px;
+  color: #0a101d;
+  background: #fff;
+  border: 1.5px solid #0a101d;
+}
+
+.is-loading {
+  opacity: 0.7;
+  pointer-events: none;
+}
+```
+
+```javascript
+const primaryBtn = document.getElementById('primaryBtn');
+
+primaryBtn.addEventListener('click', () => {
+  primaryBtn.classList.add('is-loading');
+  const original = primaryBtn.textContent;
+  primaryBtn.textContent = 'Processing...';
+
+  setTimeout(() => {
+    primaryBtn.classList.remove('is-loading');
+    primaryBtn.textContent = original;
+  }, 1200);
+});
+```
+
 ## Refactor Notes
 
 Current implementation is production-ready and should remain stable for now.

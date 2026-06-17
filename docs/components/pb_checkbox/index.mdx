@@ -111,6 +111,48 @@ class _PbCheckBoxDemoState extends State<PbCheckBoxDemo> {
 }
 ```
 
+## Web Preview (HTML/CSS/JS)
+
+```html
+<label class="pb-checkbox" id="pbCheckbox">
+  <span class="pb-checkbox-icon" aria-hidden="true"></span>
+  <span class="pb-checkbox-label">Receive marketing updates</span>
+</label>
+```
+
+```css
+.pb-checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+  font-family: Poppins, sans-serif;
+  color: #0a101d;
+}
+
+.pb-checkbox-icon {
+  width: 13px;
+  height: 13px;
+  border-radius: 999px;
+  background: rgba(168, 182, 195, 0.7);
+  transition: background 0.12s ease;
+}
+
+.pb-checkbox.is-checked .pb-checkbox-icon {
+  background: #0ad0ab;
+}
+```
+
+```javascript
+const pbCheckbox = document.getElementById('pbCheckbox');
+
+pbCheckbox.addEventListener('click', (event) => {
+  event.preventDefault();
+  pbCheckbox.classList.toggle('is-checked');
+});
+```
+
 ## Refactor Notes
 
 Current implementation is production-ready and should remain stable for now.

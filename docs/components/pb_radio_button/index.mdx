@@ -133,6 +133,64 @@ class _PbRadioButtonDemoState extends State<PbRadioButtonDemo> {
 }
 ```
 
+## Web Preview (HTML/CSS/JS)
+
+```html
+<div class="pb-radio-group" id="pbRadioGroup">
+  <button class="pb-radio is-selected" data-value="sale">
+    <span class="pb-radio-dot"></span>
+    <span>For Sale</span>
+  </button>
+  <button class="pb-radio" data-value="rent">
+    <span class="pb-radio-dot"></span>
+    <span>To Let</span>
+  </button>
+</div>
+```
+
+```css
+.pb-radio-group {
+  display: grid;
+  gap: 8px;
+  width: fit-content;
+  font-family: Poppins, sans-serif;
+}
+
+.pb-radio {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  color: #0a101d;
+}
+
+.pb-radio-dot {
+  width: 13px;
+  height: 13px;
+  border-radius: 999px;
+  background: rgba(168, 182, 195, 0.7);
+}
+
+.pb-radio.is-selected .pb-radio-dot {
+  background: #0ad0ab;
+}
+```
+
+```javascript
+const pbRadioGroup = document.getElementById('pbRadioGroup');
+const pbRadios = Array.from(pbRadioGroup.querySelectorAll('.pb-radio'));
+
+pbRadios.forEach((radio) => {
+  radio.addEventListener('click', () => {
+    pbRadios.forEach((item) => item.classList.remove('is-selected'));
+    radio.classList.add('is-selected');
+  });
+});
+```
+
 ## Refactor Notes
 
 Current implementation is production-ready and should remain stable for now.

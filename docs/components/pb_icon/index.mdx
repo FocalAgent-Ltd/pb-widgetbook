@@ -223,6 +223,61 @@ Row(
 )
 ```
 
+## Web Preview (HTML/CSS/JS)
+
+```html
+<div class="pb-icon-grid" id="iconGrid">
+  <div class="pb-icon-item"><span class="pb-icon">&#9733;</span><small>star</small></div>
+  <div class="pb-icon-item"><span class="pb-icon">&#10003;</span><small>check</small></div>
+  <div class="pb-icon-item"><span class="pb-icon">&#8635;</span><small>refresh</small></div>
+  <div class="pb-icon-item"><span class="pb-icon pb-icon-circle">?</span><small>questionInCircle</small></div>
+</div>
+```
+
+```css
+.pb-icon-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(90px, 1fr));
+  gap: 12px;
+  font-family: Poppins, sans-serif;
+}
+
+.pb-icon-item {
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+  color: #0a101d;
+}
+
+.pb-icon {
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  font-size: 16px;
+  color: #0a101d;
+}
+
+.pb-icon-circle {
+  border-radius: 999px;
+  background: #635cf5;
+  color: #fff;
+}
+```
+
+```javascript
+const iconGrid = document.getElementById('iconGrid');
+
+iconGrid.addEventListener('click', (event) => {
+  const icon = event.target.closest('.pb-icon');
+  if (!icon) return;
+  icon.style.transform = 'scale(1.12)';
+  setTimeout(() => {
+    icon.style.transform = 'scale(1)';
+  }, 120);
+});
+```
+
 ## Refactor Notes
 
 Current implementation is production-ready and should remain stable for now.

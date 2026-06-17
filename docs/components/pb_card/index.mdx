@@ -120,6 +120,51 @@ PbCard(
 )
 ```
 
+## Web Preview (HTML/CSS/JS)
+
+```html
+<div class="pb-card-demo">
+  <article class="pb-card" id="cardPreview">
+    <h3>Property Summary</h3>
+    <p>2 bed apartment, close to station, recently refurbished.</p>
+  </article>
+  <button id="toggleNarrow">Toggle Narrow</button>
+</div>
+```
+
+```css
+.pb-card-demo {
+  display: grid;
+  gap: 12px;
+  max-width: 420px;
+  font-family: Poppins, sans-serif;
+}
+
+.pb-card {
+  background: #fff;
+  border: 1px solid #dce3ea;
+  border-radius: 20px;
+  padding: 40px;
+  color: #0a101d;
+}
+
+.pb-card h3 { margin: 0 0 8px; }
+.pb-card p { margin: 0; color: #4a5563; }
+
+.pb-card.is-narrow {
+  padding: 20px;
+}
+```
+
+```javascript
+const card = document.getElementById('cardPreview');
+const toggle = document.getElementById('toggleNarrow');
+
+toggle.addEventListener('click', () => {
+  card.classList.toggle('is-narrow');
+});
+```
+
 ## Refactor Notes
 
 Current implementation is production-ready and should remain stable for now.
