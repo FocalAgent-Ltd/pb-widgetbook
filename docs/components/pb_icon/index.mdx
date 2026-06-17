@@ -5,13 +5,15 @@ description: Centralized icon factory for Propertybox app – provides consisten
 
 # PbIcon Widget
 
+## Overview
+
 The `PbIcon` class is the single source of truth for all branded SVG icons in the Propertybox design system (used across property cards, campaign dashboards, filters, status badges, etc.).
 
-It offers:
+It provides:
 - Static factory methods like `PbIcon.campaign()` that return a ready-to-use `Widget` (behaves just like Flutter's built-in `Icon`)
 - Default size of **15px** and **black** tint (overridable)
 - Semantic defaults for status icons (e.g. green check, amber star)
-- `.copyWith()` support for easy variations (size, color, fit)
+- Optional builder API via `PbIcon.base(...)` for `.copyWith()` chaining when needed
 - Automatic color tinting via `ColorFilter` for perfect matching with text/buttons
 - All icons sourced from `assets/svgs/pb_icons/*.svg` via flutter_gen
 
@@ -21,7 +23,7 @@ It offers:
   width="480"
 />
 
-## All Available PbIcon Icons
+### Icon Catalog
 
 All icons are used like: `PbIcon.nameOfIcon(size: 20, color: Colors.blue)`
 
@@ -53,6 +55,10 @@ All icons are used like: `PbIcon.nameOfIcon(size: 20, color: Colors.blue)`
 | `PbIcon.switchButton()`      | Toggle, switch account                      | Black             | 20–24             |
 | `PbIcon.spaceShip()`         | (Branding / fun element – launch feature?)  | Black             | 28–40             |
 | `PbIcon.login()`             | Sign in, authentication                     | Black             | 20–28             |
+| `PbIcon.checkInCircle()`     | Selected states, confirmations              | Black             | 14–24             |
+| `PbIcon.exclamationInCircle()` | Warnings, validation notices              | Black             | 14–24             |
+| `PbIcon.questionInCircle()`  | Help, contextual hints                      | Black             | 14–24             |
+| `PbIcon.arrowRightInCircle()` | Next step, directional CTA                | Black             | 14–24             |
 
 ### Quick copy-paste list (method names only)
 
@@ -83,6 +89,10 @@ PbIcon.template()
 PbIcon.switchButton()
 PbIcon.spaceShip()
 PbIcon.login()
+PbIcon.checkInCircle()
+PbIcon.exclamationInCircle()
+PbIcon.questionInCircle()
+PbIcon.arrowRightInCircle()
 ```
 
 ## Class Definition
@@ -92,7 +102,7 @@ class PbIcon {
   PbIcon._(); // private constructor – static usage only
 
   // Core UI icons
-  static Widget account({double size = 15.0, Color? color = Colors.black}) => /* ... */;
+  static Widget account({double size = 15.0, Color? color = Colors.black, BoxFit fit = BoxFit.contain}) => /* ... */;
   static Widget camera({double size = 15.0, Color? color = Colors.black}) => /* ... */;
   static Widget search({double size = 15.0, Color? color = Colors.black}) => /* ... */;
   // ... many more (comment, discussion, writeNotes, view, etc.)
@@ -127,7 +137,7 @@ class PbIconBuilder {
 
 ## Properties
 
-All static methods on `PbIcon` (e.g. `PbIcon.campaign()`, `PbIcon.floorPlan()`, etc.) accept the same set of optional parameters:
+Most static methods on `PbIcon` (e.g. `PbIcon.campaign()`, `PbIcon.floorPlan()`, etc.) accept:
 
 - `size` (`double`, optional, default: `15.0`):  
   The width and height of the icon in logical pixels. Use larger values (e.g. 20–32) for prominent placements like buttons or cards, and smaller values (e.g. 12–16) for inline or list use.
@@ -141,9 +151,14 @@ All static methods on `PbIcon` (e.g. `PbIcon.campaign()`, `PbIcon.floorPlan()`, 
   - Commonly overridden to match brand colors (`BrandColors.primary`), button text color, or theme accents.
 
 - `fit` (`BoxFit`, optional, default: `BoxFit.contain`):  
-  Controls how the SVG content fits within its bounding box. Rarely changed — `contain` works best for most icons in the Propertybox design system.
+  Exposed on `PbIcon.account(...)` and through `PbIconBuilder.copyWith(...)`.
 
-## Usage Examples
+- `backgroundColor` (`Color?`, optional):
+  Supported by circle variants such as `PbIcon.checkInCircle(...)`, `PbIcon.exclamationInCircle(...)`, `PbIcon.questionInCircle(...)`, and `PbIcon.arrowRightInCircle(...)`.
+
+## Usage
+Use `PbIcon` in your UI like this:
+
 ### Basic usage (inline like Icon widget)
 ```dart
 Row(
@@ -167,9 +182,13 @@ PbButton(
 )
 ```
 
-### Creating variations with copyWith
+### Creating variations with `PbIcon.base(...).copyWith(...)`
 ```dart
-final baseCampaign = PbIcon.campaign();
+final baseCampaign = PbIcon.base(
+  Assets.svgs.pbIcons.campaign,
+  size: 20,
+  color: Colors.black,
+);
 
 Column(
   children: [
@@ -178,3 +197,13 @@ Column(
   ],
 )
 ```
+
+## Refactor Notes
+
+Current implementation is production-ready and should remain stable for now.
+
+Candidates to evaluate in a later refactor:
+- Decide on one primary extension pattern: static factories only, or `PbIconBuilder` chaining as a first-class API.
+- Consider generating the icon method list from assets to reduce manual maintenance.
+- Keep semantic defaults for status icons (`check`, `thumbsUp`, `star`) but document them in a single source table.
+- Add guidance/tests for `backgroundColor` circle variants (`checkInCircle`, `questionInCircle`, etc.) to ensure consistent rendering.

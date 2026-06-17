@@ -13,7 +13,9 @@
         ["PbCard", "/components/pb_card/index"],
         ["PbButton", "/components/pb_button/index"],
         ["PbIcon", "/components/pb_icon/index"],
-        ["PbCheckBox", "/components/pb_checkbox/index"]
+        ["PbCheckBox", "/components/pb_checkbox/index"],
+        ["PbRadioButton", "/components/pb_radio_button/index"],
+        ["PbText", "/components/pb_text/index"]
         ]]
     ]
 }

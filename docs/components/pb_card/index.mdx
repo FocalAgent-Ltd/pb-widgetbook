@@ -1,6 +1,8 @@
 # PbCard Widget
 
-The `PbCard` widget is a custom card component used to display content in a stylized container with white background and rounded corners. It is designed to adapt its padding and styling based on the device type, and can optionally display a border around the content. It is provides a consistent and customizable card component for displaying content.
+## Overview
+
+The `PbCard` widget is a reusable container with a white background, rounded corners, optional border, and responsive padding behavior for desktop and non-desktop layouts. It provides a consistent, customizable card surface across the app.
 
 <img src="https://raw.githubusercontent.com/FocalAgent-Limited/propertybox-ui/main/docs/components/pb_card/image1.png" width="200"/>
 
@@ -10,8 +12,17 @@ The `PbCard` widget is a custom card component used to display content in a styl
 class PbCard extends StatelessWidget {
   final Widget child;
   final bool border;
+  final bool isNarrower;
+  final double verticalPadding;
+  final double horizontalPadding;
 
-  const PbCard({required this.child, this.border = true, super.key});
+  const PbCard(
+      {required this.child,
+      this.verticalPadding = 40,
+      this.horizontalPadding = 40,
+      this.border = true,
+      this.isNarrower = false,
+      super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,12 +31,16 @@ class PbCard extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         border: border ? Border.all(color: BrandColors.greyBorderColor, width: 1) : null,
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: BorderRadius.circular(20),
         color: Colors.white,
       ),
       padding: isDesktop
-          ? const EdgeInsets.symmetric(horizontal: 35, vertical: 40)
-          : const EdgeInsets.all(20),
+          ? EdgeInsets.symmetric(
+              horizontal: isNarrower ? 20 : horizontalPadding,
+              vertical: isNarrower ? 20 : verticalPadding)
+          : EdgeInsets.symmetric(
+              horizontal: horizontalPadding == 0 ? 0 : 20,
+              vertical: verticalPadding == 0 ? 0 : 20),
       child: child,
     );
   }
@@ -34,21 +49,23 @@ class PbCard extends StatelessWidget {
 
 ## Properties
 
-- `child` (`Widget`, required): The content to be displayed inside the card. This can be any widget, such as a `Text`, `Image`, or a custom widget.
-
-- `border` (`bool`, optional): Determines whether a border should be displayed around the card. The default value is `true`.
+- `child` (`Widget`, required): The content displayed inside the card.
+- `border` (`bool`, optional, default: `true`): Whether to show a 1px border using `BrandColors.greyBorderColor`.
+- `isNarrower` (`bool`, optional, default: `false`): On desktop, forces compact padding (`20` horizontal / `20` vertical), ignoring custom desktop paddings.
+- `verticalPadding` (`double`, optional, default: `40`): Desktop vertical padding when `isNarrower` is `false`. On non-desktop, any non-zero value maps to `20`.
+- `horizontalPadding` (`double`, optional, default: `40`): Desktop horizontal padding when `isNarrower` is `false`. On non-desktop, any non-zero value maps to `20`.
 
 ## Usage
 
-To use the `PbCard` widget, simply include it in your widget tree and pass the content you want to display as the `child` property. You can also specify whether you want the card to have a `border` by setting the border property.
+Use `PbCard` in your UI like this:
 
-## Example
+### Example
 
 Here is an example of how to use the `PbCard` widget in a Flutter application:
 
 ```dart
 import 'package:flutter/material.dart';
-import 'package:your_project/PbCard.dart';
+import 'package:propertybox2_app/widgets/pb_card.dart';
 
 class MyHomePage extends StatelessWidget {
   @override
@@ -60,6 +77,8 @@ class MyHomePage extends StatelessWidget {
       body: Center(
         child: PbCard(
           border: true,
+          horizontalPadding: 40,
+          verticalPadding: 40,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -80,3 +99,33 @@ class MyHomePage extends StatelessWidget {
   }
 }
 ```
+
+### Narrow desktop variant
+
+```dart
+PbCard(
+  isNarrower: true,
+  child: Text('Compact card content'),
+)
+```
+
+### Edge-to-edge content (mobile + desktop)
+
+```dart
+PbCard(
+  horizontalPadding: 0,
+  verticalPadding: 0,
+  border: false,
+  child: MyCustomLayout(),
+)
+```
+
+## Refactor Notes
+
+Current implementation is production-ready and should remain stable for now.
+
+Candidates to evaluate in a later refactor:
+- Clarify padding behavior by splitting desktop and mobile paddings explicitly (instead of non-zero mapping to `20` on mobile).
+- Review whether `isNarrower` should remain a boolean shortcut or be replaced by a size enum (`compact`, `default`, `spacious`).
+- Standardize import/example path so docs snippets are copy-paste ready for the app package.
+- Add visual examples for `border: false`, `isNarrower: true`, and zero-padding use cases.

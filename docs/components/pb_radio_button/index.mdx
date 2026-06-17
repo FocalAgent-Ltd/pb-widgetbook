@@ -1,0 +1,144 @@
+---
+title: PbRadioButton
+description: Compact clickable radio option row with branded selected state and label styling.
+---
+
+# PbRadioButton Widget
+
+## Overview
+
+The `PbRadioButton` widget is a stateless, compact radio-option row used for single-choice selections in Propertybox forms and campaign flows.
+
+It provides:
+- Clickable row interaction (`MouseRegion` + `GestureDetector`)
+- Custom circular selected/unselected indicator
+- Branded selected-state color
+- Label rendering with `PbText` field label style
+- Configurable `fontSize` constructor argument for API consistency
+
+## Class Definition
+
+```dart
+class PbRadioButton extends StatelessWidget {
+  const PbRadioButton({
+    super.key,
+    required this.label,
+    required this.isSelected,
+    required this.onTap,
+    this.fontSize = 12,
+  });
+
+  final String label;
+  final bool isSelected;
+  final VoidCallback onTap;
+  final double fontSize;
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+        onTap: onTap,
+        behavior: HitTestBehavior.opaque,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            IgnorePointer(
+              child: _RadioCircle(isSelected: isSelected),
+            ),
+            const SizedBox(width: 8),
+            IgnorePointer(
+              child: PbText(
+                label,
+                type: PbTextType.fieldLabel,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _RadioCircle extends StatelessWidget {
+  const _RadioCircle({required this.isSelected});
+
+  final bool isSelected;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 13,
+      height: 13,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: isSelected
+            ? BrandColors.accentColor1
+            : const Color.fromARGB(125, 168, 182, 195),
+      ),
+    );
+  }
+}
+```
+
+## Properties
+
+- `label` (`String`, required): Text displayed to the right of the radio indicator.
+- `isSelected` (`bool`, required): Controls selected/unselected visual state.
+- `onTap` (`VoidCallback`, required): Called when the row is tapped/clicked.
+- `fontSize` (`double`, optional, default: `12`): Exposed in the API but not currently applied by the build logic.
+
+## Usage
+
+Use `PbRadioButton` in your UI like this:
+
+```dart
+class PbRadioButtonDemo extends StatefulWidget {
+  const PbRadioButtonDemo({super.key});
+
+  @override
+  State<PbRadioButtonDemo> createState() => _PbRadioButtonDemoState();
+}
+
+class _PbRadioButtonDemoState extends State<PbRadioButtonDemo> {
+  String selectedOption = 'For Sale';
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        PbRadioButton(
+          label: 'For Sale',
+          isSelected: selectedOption == 'For Sale',
+          onTap: () {
+            setState(() {
+              selectedOption = 'For Sale';
+            });
+          },
+        ),
+        const SizedBox(height: 8),
+        PbRadioButton(
+          label: 'To Let',
+          isSelected: selectedOption == 'To Let',
+          onTap: () {
+            setState(() {
+              selectedOption = 'To Let';
+            });
+          },
+        ),
+      ],
+    );
+  }
+}
+```
+
+## Refactor Notes
+
+Current implementation is production-ready and should remain stable for now.
+
+Candidates to evaluate in a later refactor:
+- Align `fontSize` behavior with implementation (it is currently exposed in API but not directly applied in build logic).
+- Consider extracting a shared selectable-row primitive for `PbCheckBox` and `PbRadioButton` to reduce duplication.
+- Keep semantic API (`label`, `isSelected`, `onTap`) as the main usage pattern.
+- Add accessibility guidance for focus, keyboard navigation, and semantics labels.

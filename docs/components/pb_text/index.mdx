@@ -1,0 +1,160 @@
+---
+title: PbText
+description: Design-system text widget with semantic text types and flexible typography overrides.
+---
+
+# PbText Widget
+
+## Overview
+
+The `PbText` widget is the shared typography primitive in Propertybox. It combines semantic text variants (`PbTextType`) with direct style overrides so teams can keep consistent defaults while still supporting edge-case styling.
+
+It provides:
+- Semantic text presets via `PbTextType`
+- Optional style overrides (`fontSize`, `fontWeight`, `color`, spacing, etc.)
+- Optional tap behavior with internet-aware callback wrapper
+- Optional text resize behavior with `FittedBox`
+- Headline-specific default sizing logic
+
+## Class Definition
+
+```dart
+enum PbTextType {
+  header1,
+  header2,
+  header3,
+  header4,
+  header5,
+  body,
+  bodySmall,
+  bodyMedium,
+  caption,
+  fieldLabel,
+  advertHeader,
+  advertBody,
+  footer,
+}
+
+class PbText extends StatelessWidget {
+  final String text;
+  final PbTextType type;
+  final Color? color;
+  final TextAlign? textAlign;
+  final int? maxLines;
+  final TextOverflow? overflow;
+  final VoidCallback? onTap;
+  final double? fontSize;
+  final FontWeight? fontWeight;
+  final double? letterSpacing;
+  final TextDecoration? textDecoration;
+  final double? wordSpacing;
+  final double? height;
+  final FontStyle? fontStyle;
+  final String? fontFamily;
+  final bool resizeText;
+
+  const PbText(
+    this.text, {
+    super.key,
+    this.type = PbTextType.body,
+    this.color,
+    this.textAlign,
+    this.maxLines,
+    this.overflow,
+    this.onTap,
+    this.fontSize,
+    this.fontWeight,
+    this.letterSpacing,
+    this.textDecoration,
+    this.wordSpacing,
+    this.height,
+    this.fontStyle,
+    this.fontFamily,
+    this.resizeText = false,
+  });
+}
+```
+
+## PbTextType Presets
+
+- `header1` to `header5`: headline hierarchy mapped from theme display/headline tokens
+- `body`: default body text
+- `bodySmall`: body with smaller default size
+- `bodyMedium`: medium body variant
+- `caption`: compact caption style
+- `fieldLabel`: small label style for forms/fields
+- `advertHeader`: bold campaign/advert heading style
+- `advertBody`: compact advert body style
+- `footer`: footer/title style
+
+## Properties
+
+- `text` (`String`, required): Text content to render.
+- `type` (`PbTextType`, optional, default: `body`): Semantic typography preset.
+- `color` (`Color?`, optional): Text color override.
+- `textAlign` (`TextAlign?`, optional): Horizontal text alignment.
+- `maxLines` (`int?`, optional): Maximum rendered lines.
+- `overflow` (`TextOverflow?`, optional): Overflow behavior when text exceeds space.
+- `onTap` (`VoidCallback?`, optional): Tap callback wrapped in internet connectivity guard.
+- `fontSize` (`double?`, optional): Explicit font-size override.
+- `fontWeight` (`FontWeight?`, optional): Explicit weight override.
+- `letterSpacing` (`double?`, optional): Character spacing override.
+- `textDecoration` (`TextDecoration?`, optional): Text decoration override.
+- `wordSpacing` (`double?`, optional): Word spacing override.
+- `height` (`double?`, optional): Line-height multiplier.
+- `fontStyle` (`FontStyle?`, optional): Font style override (e.g. italic).
+- `fontFamily` (`String?`, optional): Font family override.
+- `resizeText` (`bool`, optional, default: `false`): When true, text is wrapped in a `FittedBox`.
+
+## Usage
+
+Use `PbText` in your UI like this:
+
+### Headline + body
+
+```dart
+Column(
+  crossAxisAlignment: CrossAxisAlignment.start,
+  children: const [
+    PbText('Property Details', type: PbTextType.header3),
+    SizedBox(height: 8),
+    PbText(
+      'A bright and spacious apartment close to transport links.',
+      type: PbTextType.body,
+    ),
+  ],
+)
+```
+
+### Form label usage
+
+```dart
+const PbText(
+  'Email Address',
+  type: PbTextType.fieldLabel,
+)
+```
+
+### Overridden style
+
+```dart
+const PbText(
+  'Featured listing',
+  type: PbTextType.body,
+  fontSize: 13,
+  fontWeight: FontWeight.w600,
+  letterSpacing: 0.2,
+)
+```
+
+## Refactor Notes
+
+Current implementation is production-ready and should remain stable for now.
+
+A future refactor can focus on simplifying overlapping style inputs while preserving backward compatibility.
+
+Candidates to evaluate in a later refactor:
+- Consolidating duplicate semantics between `type` presets and direct style overrides
+- Reviewing whether all headline mappings (`displayLarge`, `displayMedium`, `displaySmall`) are needed in your active theme
+- Potentially replacing many individual style params with a single optional `TextStyle` override
+- Keeping `PbTextType` as the primary API to preserve consistency across the app

@@ -5,9 +5,11 @@ description: Clickable checkbox row with branded icon and text label styling for
 
 # PbCheckBox Widget
 
+## Overview
+
 The `PbCheckBox` widget is a lightweight, stateless checkbox row used across Propertybox UI flows where a compact, branded checkbox interaction is needed.
 
-It includes:
+It provides:
 - Clickable row interaction (`MouseRegion` + `GestureDetector`)
 - Circular check icon using `PbIcon.checkInCircle`
 - Branded checked and unchecked icon states
@@ -78,7 +80,9 @@ class PbCheckBox extends StatelessWidget {
 - `onTap` (`VoidCallback`, required): Called when the user clicks/taps the row.
 - `fontSize` (`double`, optional, default: `12`): Label text size.
 
-## Usage Example
+## Usage
+
+Use `PbCheckBox` in your UI like this:
 
 ```dart
 class PbCheckBoxDemo extends StatefulWidget {
@@ -106,3 +110,13 @@ class _PbCheckBoxDemoState extends State<PbCheckBoxDemo> {
   }
 }
 ```
+
+## Refactor Notes
+
+Current implementation is production-ready and should remain stable for now.
+
+Candidates to evaluate in a later refactor:
+- Consider using `PbText` for label rendering to align typography APIs with other components.
+- If keyboard accessibility is needed, evaluate replacing `GestureDetector` with `InkWell`/`FocusableActionDetector` patterns.
+- Keep the semantic API (`label`, `isChecked`, `onTap`) minimal and stable.
+- Document the visual token values (icon size, spacing, selected/unselected colors) in one place.
