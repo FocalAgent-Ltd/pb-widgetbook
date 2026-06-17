@@ -16,6 +16,58 @@ It provides:
 - Label rendering with `PbText` field label style
 - Configurable `fontSize` constructor argument for API consistency
 
+## Live Preview
+
+<div class="pb-radio-live-group">
+  <label class="pb-radio-live">
+    <input type="radio" name="pbRadioPreview" checked />
+    <span class="pb-radio-live-dot"></span>
+    <span>For Sale</span>
+  </label>
+  <label class="pb-radio-live">
+    <input type="radio" name="pbRadioPreview" />
+    <span class="pb-radio-live-dot"></span>
+    <span>To Let</span>
+  </label>
+</div>
+
+<style>
+  .pb-radio-live-group {
+    --pb-dark: #0a101d;
+    --pb-teal: #0ad0ab;
+    --pb-muted: rgba(168, 182, 195, 0.7);
+    --pb-font: Poppins, sans-serif;
+    display: grid;
+    gap: 8px;
+    width: fit-content;
+    font-family: var(--pb-font);
+    color: var(--pb-dark);
+    font-size: 12px;
+  }
+  .pb-radio-live {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    padding: 6px 8px;
+    border-radius: 10px;
+    transition: background 0.12s ease;
+  }
+  .pb-radio-live:hover { background: #f3f6fb; }
+  .pb-radio-live input { display: none; }
+  .pb-radio-live-dot {
+    width: 13px;
+    height: 13px;
+    border-radius: 999px;
+    background: var(--pb-muted);
+    transition: background 0.12s ease, transform 0.12s ease;
+  }
+  .pb-radio-live input:checked + .pb-radio-live-dot {
+    background: var(--pb-teal);
+    transform: scale(1.04);
+  }
+</style>
+
 ## Class Definition
 
 ```dart
@@ -131,64 +183,6 @@ class _PbRadioButtonDemoState extends State<PbRadioButtonDemo> {
     );
   }
 }
-```
-
-## Web Preview (HTML/CSS/JS)
-
-```html
-<div class="pb-radio-group" id="pbRadioGroup">
-  <button class="pb-radio is-selected" data-value="sale">
-    <span class="pb-radio-dot"></span>
-    <span>For Sale</span>
-  </button>
-  <button class="pb-radio" data-value="rent">
-    <span class="pb-radio-dot"></span>
-    <span>To Let</span>
-  </button>
-</div>
-```
-
-```css
-.pb-radio-group {
-  display: grid;
-  gap: 8px;
-  width: fit-content;
-  font-family: Poppins, sans-serif;
-}
-
-.pb-radio {
-  border: 0;
-  background: transparent;
-  padding: 0;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  cursor: pointer;
-  color: #0a101d;
-}
-
-.pb-radio-dot {
-  width: 13px;
-  height: 13px;
-  border-radius: 999px;
-  background: rgba(168, 182, 195, 0.7);
-}
-
-.pb-radio.is-selected .pb-radio-dot {
-  background: #0ad0ab;
-}
-```
-
-```javascript
-const pbRadioGroup = document.getElementById('pbRadioGroup');
-const pbRadios = Array.from(pbRadioGroup.querySelectorAll('.pb-radio'));
-
-pbRadios.forEach((radio) => {
-  radio.addEventListener('click', () => {
-    pbRadios.forEach((item) => item.classList.remove('is-selected'));
-    radio.classList.add('is-selected');
-  });
-});
 ```
 
 ## Refactor Notes

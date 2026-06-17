@@ -16,6 +16,49 @@ It provides:
 - Optional text resize behavior with `FittedBox`
 - Headline-specific default sizing logic
 
+## Live Preview
+
+<div class="pb-text-live" id="pbTextLive">
+  <label class="pb-text-live-toggle"><input id="pbTextCompactToggle" type="checkbox" /> Compact mode</label>
+  <h3 class="pb-text-live-h3">Property Details</h3>
+  <p class="pb-text-live-body">A bright and spacious apartment close to transport links.</p>
+  <p class="pb-text-live-label">Email Address</p>
+  <p class="pb-text-live-custom">Featured listing</p>
+</div>
+
+<style>
+  .pb-text-live {
+    --pb-dark: #0a101d;
+    --pb-body: #334155;
+    --pb-muted: #475569;
+    --pb-font: Poppins, sans-serif;
+    display: grid;
+    gap: 8px;
+    max-width: 460px;
+    padding: 12px;
+    border: 1px solid #e3e8ef;
+    border-radius: 14px;
+    background: linear-gradient(180deg, #ffffff 0%, #f9fbff 100%);
+    font-family: var(--pb-font);
+    color: var(--pb-dark);
+  }
+  .pb-text-live h3,
+  .pb-text-live p { margin: 0; }
+  .pb-text-live-h3 { font-size: 20px; font-weight: 700; }
+  .pb-text-live-body { font-size: 16px; font-weight: 400; color: var(--pb-body); }
+  .pb-text-live-label { font-size: 12px; font-weight: 500; }
+  .pb-text-live-custom { font-size: 13px; font-weight: 600; letter-spacing: 0.2px; }
+  .pb-text-live-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--pb-muted);
+  }
+  #pbTextCompactToggle:checked ~ .pb-text-live-h3 { font-size: 16px; }
+  #pbTextCompactToggle:checked ~ .pb-text-live-body { font-size: 14px; }
+</style>
+
 ## Class Definition
 
 ```dart
@@ -145,46 +188,6 @@ const PbText(
   fontWeight: FontWeight.w600,
   letterSpacing: 0.2,
 )
-```
-
-## Web Preview (HTML/CSS/JS)
-
-```html
-<section class="pb-text-demo" id="pbTextDemo">
-  <h2 class="pb-text pb-h3">Property Details</h2>
-  <p class="pb-text pb-body">A bright and spacious apartment close to transport links.</p>
-  <label class="pb-text pb-label">Email Address</label>
-  <p class="pb-text pb-custom">Featured listing</p>
-  <button id="toggleCompactText">Toggle Compact</button>
-</section>
-```
-
-```css
-.pb-text-demo {
-  display: grid;
-  gap: 8px;
-  max-width: 460px;
-  font-family: Poppins, sans-serif;
-  color: #0a101d;
-}
-
-.pb-text { margin: 0; }
-.pb-h3 { font-size: 20px; font-weight: 700; }
-.pb-body { font-size: 16px; font-weight: 400; color: #334155; }
-.pb-label { font-size: 12px; font-weight: 500; }
-.pb-custom { font-size: 13px; font-weight: 600; letter-spacing: 0.2px; }
-
-.pb-text-demo.is-compact .pb-h3 { font-size: 16px; }
-.pb-text-demo.is-compact .pb-body { font-size: 14px; }
-```
-
-```javascript
-const pbTextDemo = document.getElementById('pbTextDemo');
-const toggleCompactText = document.getElementById('toggleCompactText');
-
-toggleCompactText.addEventListener('click', () => {
-  pbTextDemo.classList.toggle('is-compact');
-});
 ```
 
 ## Refactor Notes

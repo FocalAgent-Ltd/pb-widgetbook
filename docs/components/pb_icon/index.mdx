@@ -17,6 +17,55 @@ It provides:
 - Automatic color tinting via `ColorFilter` for perfect matching with text/buttons
 - All icons sourced from `assets/svgs/pb_icons/*.svg` via flutter_gen
 
+## Live Preview
+
+<div class="pb-icon-live-grid">
+  <div class="pb-icon-live-item"><span class="pb-icon-live">★</span><small>star</small></div>
+  <div class="pb-icon-live-item"><span class="pb-icon-live">✓</span><small>check</small></div>
+  <div class="pb-icon-live-item"><span class="pb-icon-live">↻</span><small>refresh</small></div>
+  <div class="pb-icon-live-item"><span class="pb-icon-live pb-icon-live-circle">?</span><small>questionInCircle</small></div>
+</div>
+
+<style>
+  .pb-icon-live-grid {
+    --pb-dark: #0a101d;
+    --pb-purple: #635cf5;
+    --pb-font: Poppins, sans-serif;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(90px, 1fr));
+    gap: 12px;
+    max-width: 460px;
+    padding: 12px;
+    border: 1px solid #e3e8ef;
+    border-radius: 14px;
+    background: linear-gradient(180deg, #ffffff 0%, #f9fbff 100%);
+    font-family: var(--pb-font);
+  }
+  .pb-icon-live-item {
+    display: grid;
+    justify-items: center;
+    gap: 6px;
+    color: var(--pb-dark);
+  }
+  .pb-icon-live {
+    width: 28px;
+    height: 28px;
+    display: grid;
+    place-items: center;
+    border-radius: 8px;
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+  }
+  .pb-icon-live-item:hover .pb-icon-live {
+    transform: scale(1.12);
+    box-shadow: 0 4px 10px rgba(10, 16, 29, 0.16);
+  }
+  .pb-icon-live-circle {
+    border-radius: 999px;
+    background: var(--pb-purple);
+    color: #fff;
+  }
+</style>
+
 <img
   src="https://raw.githubusercontent.com/FocalAgent-Limited/propertybox-ui/main/docs/components/pb_icon/preview-grid.png"
   alt="PbIcon gallery – campaign, floorPlan, epc, check, star, etc."
@@ -221,61 +270,6 @@ Row(
     ),
   ],
 )
-```
-
-## Web Preview (HTML/CSS/JS)
-
-```html
-<div class="pb-icon-grid" id="iconGrid">
-  <div class="pb-icon-item"><span class="pb-icon">&#9733;</span><small>star</small></div>
-  <div class="pb-icon-item"><span class="pb-icon">&#10003;</span><small>check</small></div>
-  <div class="pb-icon-item"><span class="pb-icon">&#8635;</span><small>refresh</small></div>
-  <div class="pb-icon-item"><span class="pb-icon pb-icon-circle">?</span><small>questionInCircle</small></div>
-</div>
-```
-
-```css
-.pb-icon-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(90px, 1fr));
-  gap: 12px;
-  font-family: Poppins, sans-serif;
-}
-
-.pb-icon-item {
-  display: grid;
-  justify-items: center;
-  gap: 6px;
-  color: #0a101d;
-}
-
-.pb-icon {
-  width: 28px;
-  height: 28px;
-  display: grid;
-  place-items: center;
-  font-size: 16px;
-  color: #0a101d;
-}
-
-.pb-icon-circle {
-  border-radius: 999px;
-  background: #635cf5;
-  color: #fff;
-}
-```
-
-```javascript
-const iconGrid = document.getElementById('iconGrid');
-
-iconGrid.addEventListener('click', (event) => {
-  const icon = event.target.closest('.pb-icon');
-  if (!icon) return;
-  icon.style.transform = 'scale(1.12)';
-  setTimeout(() => {
-    icon.style.transform = 'scale(1)';
-  }, 120);
-});
 ```
 
 ## Refactor Notes

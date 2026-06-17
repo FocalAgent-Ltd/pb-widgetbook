@@ -4,7 +4,49 @@
 
 The `PbCard` widget is a reusable container with a white background, rounded corners, optional border, and responsive padding behavior for desktop and non-desktop layouts. It provides a consistent, customizable card surface across the app.
 
-<img src="https://raw.githubusercontent.com/FocalAgent-Limited/propertybox-ui/main/docs/components/pb_card/image1.png" width="200"/>
+## Live Preview
+
+<div class="pb-card-live-wrap">
+  <label class="pb-card-toggle"><input id="pbCardNarrowToggle" type="checkbox" /> Narrow mode</label>
+  <article class="pb-card-live" id="pbCardLive">
+    <h4>Property Summary</h4>
+    <p>2 bed apartment, close to station, recently refurbished.</p>
+  </article>
+</div>
+
+<style>
+  .pb-card-live-wrap {
+    --pb-dark: #0a101d;
+    --pb-border: #dce3ea;
+    --pb-font: Poppins, sans-serif;
+    display: grid;
+    gap: 10px;
+    max-width: 460px;
+    font-family: var(--pb-font);
+  }
+  .pb-card-live {
+    background: #fff;
+    border: 1px solid var(--pb-border);
+    border-radius: 20px;
+    padding: 40px;
+    color: var(--pb-dark);
+    box-shadow: 0 8px 22px rgba(10, 16, 29, 0.08);
+    transition: padding 0.15s ease, box-shadow 0.15s ease;
+  }
+  .pb-card-live:hover { box-shadow: 0 10px 26px rgba(10, 16, 29, 0.12); }
+  .pb-card-live h4 { margin: 0 0 8px; }
+  .pb-card-live p { margin: 0; color: #475569; }
+  .pb-card-toggle {
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+    color: #334155;
+    font-size: 12px;
+  }
+  #pbCardNarrowToggle:checked ~ .pb-card-live {
+    padding: 20px;
+  }
+</style>
 
 ## Class Definition
 
@@ -118,51 +160,6 @@ PbCard(
   border: false,
   child: MyCustomLayout(),
 )
-```
-
-## Web Preview (HTML/CSS/JS)
-
-```html
-<div class="pb-card-demo">
-  <article class="pb-card" id="cardPreview">
-    <h3>Property Summary</h3>
-    <p>2 bed apartment, close to station, recently refurbished.</p>
-  </article>
-  <button id="toggleNarrow">Toggle Narrow</button>
-</div>
-```
-
-```css
-.pb-card-demo {
-  display: grid;
-  gap: 12px;
-  max-width: 420px;
-  font-family: Poppins, sans-serif;
-}
-
-.pb-card {
-  background: #fff;
-  border: 1px solid #dce3ea;
-  border-radius: 20px;
-  padding: 40px;
-  color: #0a101d;
-}
-
-.pb-card h3 { margin: 0 0 8px; }
-.pb-card p { margin: 0; color: #4a5563; }
-
-.pb-card.is-narrow {
-  padding: 20px;
-}
-```
-
-```javascript
-const card = document.getElementById('cardPreview');
-const toggle = document.getElementById('toggleNarrow');
-
-toggle.addEventListener('click', () => {
-  card.classList.toggle('is-narrow');
-});
 ```
 
 ## Refactor Notes
