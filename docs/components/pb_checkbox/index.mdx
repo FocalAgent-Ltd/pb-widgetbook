@@ -1,0 +1,108 @@
+---
+title: PbCheckBox
+description: Clickable checkbox row with branded icon and text label styling for campaign and form flows.
+---
+
+# PbCheckBox Widget
+
+The `PbCheckBox` widget is a lightweight, stateless checkbox row used across Propertybox UI flows where a compact, branded checkbox interaction is needed.
+
+It includes:
+- Clickable row interaction (`MouseRegion` + `GestureDetector`)
+- Circular check icon using `PbIcon.checkInCircle`
+- Branded checked and unchecked icon states
+- Label text using Propertybox font styling helper
+- Configurable label font size
+
+## Class Definition
+
+```dart
+class PbCheckBox extends StatelessWidget {
+  const PbCheckBox({
+    super.key,
+    required this.label,
+    required this.isChecked,
+    required this.onTap,
+    this.fontSize = 12,
+  });
+
+  final String label;
+  final bool isChecked;
+  final VoidCallback onTap;
+  final double fontSize;
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+        onTap: onTap,
+        behavior: HitTestBehavior.opaque,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            IgnorePointer(
+              child: PbIcon.checkInCircle(
+                size: 13,
+                color: isChecked
+                    ? BrandColors.accentColor1
+                    : const Color.fromARGB(125, 168, 182, 195),
+              ),
+            ),
+            const SizedBox(width: 8),
+            IgnorePointer(
+              child: Text(
+                label,
+                style: getTextStyleWithFont(
+                  fontFamily: TextFontsFamily.poppins,
+                  textStyleData: TextStyle(
+                    color: BrandColors.primaryColor,
+                    fontSize: fontSize,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+```
+
+## Properties
+
+- `label` (`String`, required): Text displayed to the right of the checkbox icon.
+- `isChecked` (`bool`, required): Controls icon color/state (checked vs unchecked).
+- `onTap` (`VoidCallback`, required): Called when the user clicks/taps the row.
+- `fontSize` (`double`, optional, default: `12`): Label text size.
+
+## Usage Example
+
+```dart
+class PbCheckBoxDemo extends StatefulWidget {
+  const PbCheckBoxDemo({super.key});
+
+  @override
+  State<PbCheckBoxDemo> createState() => _PbCheckBoxDemoState();
+}
+
+class _PbCheckBoxDemoState extends State<PbCheckBoxDemo> {
+  bool marketingConsent = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return PbCheckBox(
+      label: 'Receive marketing updates',
+      isChecked: marketingConsent,
+      onTap: () {
+        setState(() {
+          marketingConsent = !marketingConsent;
+        });
+      },
+      fontSize: 12,
+    );
+  }
+}
+```
