@@ -1,6 +1,6 @@
 ---
 title: PbIcon
-description: Centralized icon factory for Propertybox app – provides consistent, tintable SVG icons via static methods, with sensible defaults and copyWith support.
+description: Centralized icon factory for Propertybox app with tintable SVG static methods, sensible defaults, optional builder copyWith flow, and circle variants with backgroundColor support.
 ---
 
 # PbIcon Widget
@@ -118,6 +118,12 @@ class PbIcon {
   static Widget thumbsUp({double size = 15.0, Color? color = Colors.green}) => /* ... */;
   static Widget star({double size = 15.0, Color? color = Colors.amber}) => /* ... */;
 
+  // Circle variants (optional backgroundColor)
+  static Widget checkInCircle({double size = 15.0, Color? color = Colors.black, Color? backgroundColor}) => /* ... */;
+  static Widget exclamationInCircle({double size = 15.0, Color? color = Colors.black, Color? backgroundColor}) => /* ... */;
+  static Widget questionInCircle({double size = 15.0, Color? color = Colors.black, Color? backgroundColor}) => /* ... */;
+  static Widget arrowRightInCircle({double size = 15.0, Color? color = Colors.black, Color? backgroundColor}) => /* ... */;
+
   // Actions & misc
   static Widget download({double size = 15.0, Color? color = Colors.black}) => /* ... */;
   static Widget refreshInCircle({double size = 15.0, Color? color = Colors.black}) => /* ... */;
@@ -194,6 +200,25 @@ Column(
   children: [
     baseCampaign.copyWith(size: 32, color: Colors.blueGrey)(),
     baseCampaign.copyWith(size: 12, color: Colors.grey.shade500)(),
+  ],
+)
+```
+
+### Circle variants with optional background
+```dart
+Row(
+  children: [
+    PbIcon.checkInCircle(
+      size: 18,
+      color: Colors.white,
+      backgroundColor: Colors.green,
+    ),
+    const SizedBox(width: 8),
+    PbIcon.questionInCircle(
+      size: 18,
+      color: Colors.white,
+      backgroundColor: Colors.blueGrey,
+    ),
   ],
 )
 ```

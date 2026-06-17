@@ -9,6 +9,8 @@ description: Versatile button component with three styles, color variants, PbIco
 
 The `PbButton` is the primary button component in the Propertybox design system. It comes in three distinct styles:
 
+Figma reference: https://www.figma.com/design/24mSoGWIWxWpitijtkSJSN/Propertybox?node-id=42662-7701
+
 - **primaryLarge**: prominent full-width call-to-action button (e.g. "Arrange Viewing", "Contact Agent")
 - **secondary**: medium-sized button with multiple color options (e.g. "Save", "Share", "Enquire")
 - **compact**: small pill-shaped button (e.g. tags, inline actions like "Featured")
@@ -17,6 +19,7 @@ It provides:
 - Fully rounded (pill) corners
 - Momo Trust font with sentence-case text
 - Automatic icon tinting when using `PbIcon`
+- Automatic icon sizing relative to label size
 - Loading state with centered spinner
 - Disabled state (via `onPressed: null` or `isLoading: true`)
 - Optional fixed width or full-width behavior
@@ -134,6 +137,18 @@ Row(
       onPressed: () {},
     ),
   ],
+)
+```
+
+### Trailing icon usage
+```dart
+PbButton(
+  style: PbButtonStyle.secondary,
+  label: 'Save Search',
+  icon: PbIcon.star(),
+  iconOnTrailing: true,
+  secondaryColor: PbSecondaryColor.white,
+  onPressed: () {},
 )
 ```
 
